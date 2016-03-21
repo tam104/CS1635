@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FurnitureFinder</string>
+    <string name="title_activity_map_pane">MapPane</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
