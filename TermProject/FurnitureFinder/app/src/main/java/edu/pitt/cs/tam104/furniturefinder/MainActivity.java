@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 
 public class MainActivity extends FragmentActivity
@@ -22,7 +23,7 @@ public class MainActivity extends FragmentActivity
 
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab1").setIndicator("Map", null),
-                MapsActivity.class, null);
+                MapFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab2").setIndicator("Favorites", null),
                 FavoriteTab.class, null);
