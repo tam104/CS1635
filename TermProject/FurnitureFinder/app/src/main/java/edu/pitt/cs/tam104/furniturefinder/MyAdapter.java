@@ -5,64 +5,56 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
- * Created by Tiffany on 3/20/2016.
- */
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>
-{
-    private String[] mDataset;
+import java.util.List;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
+
+    public static class ItemViewHolder extends RecyclerView.ViewHolder
     {
         CardView cv;
-        TextView itemName; //Name of the item
-        TextView itemDesc; //Description of the item
+        TextView itemName;
+        TextView itemDesc;
+        ImageView itemPhoto;
 
-
-        public ViewHolder(View v)
-        {
-            super(v);
+        ItemViewHolder(View itemView) {
+            super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
             itemName = (TextView)itemView.findViewById(R.id.name);
             itemDesc = (TextView)itemView.findViewById(R.id.description);
-
+            itemPhoto = (ImageView)itemView.findViewById(R.id.photo);
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(String[] myDataset)
-    {
-        mDataset = myDataset;
+    List<Item> items;
+
+    MyAdapter(List<Item> items){
+        this.items = items;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.favorite_layout, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.itemName.setText(mDataset[position]);
-        holder.itemName.setText(mDataset[position]);
+    public ItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item, viewGroup, false);
+        ItemViewHolder ivh = new ItemViewHolder(v);
+        return ivh;
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    @Override
+    public void onBindViewHolder(ItemViewHolder personViewHolder, int i) {
+        personViewHolder.itemName.setText(items.get(i).name);
+        personViewHolder.itemDesc.setText(items.get(i).description);
+        personViewHolder.itemPhoto.setImageResource(items.get(i).photoId);
+    }
+
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return items.size();
     }
 }

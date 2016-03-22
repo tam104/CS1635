@@ -1,8 +1,8 @@
 package edu.pitt.cs.tam104.furniturefinder;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,48 +17,42 @@ import java.util.List;
  */
 public class FavoriteTab extends Fragment
 {
-    private  RecyclerView rv;
-    private  RecyclerView.LayoutManager llm;
+       private List<Item> items;
+       private RecyclerView rv;
 
         public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
         {
             View view = inflater.inflate(R.layout.favorite_layout, container, false);
-            rv = (RecyclerView)view.findViewById(R.id.rv);
-            rv.setHasFixedSize(true);
 
-            final FragmentActivity context = getActivity();
-            llm = new LinearLayoutManager(context);
-            rv.setLayoutManager(llm);
+            rv=(RecyclerView)view.findViewById(R.id.rv);
 
-            initializeData(); //Get all the furniture pieces
+            Context context=container.getContext();
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            rv.setLayoutManager(layoutManager);
+
+            initializeData();
+            initializeAdapter();
 
             return view;
         }
 
-    class Item
-    {
-        String name;
-        String description;
-        int photoId;
-
-        Item(String name, String description)
+        private void initializeData()
         {
-            this.name = name;
-            this.description = description;
+            items = new ArrayList<>();
+            items.add(new Item("Chair", "Test", R.drawable.stock_chair));
+            items.add(new Item("Sofa", "Test", R.drawable.stock_couch));
+            items.add(new Item("Desk", "Test", R.drawable.stock_desk));
+            items.add(new Item("Chair", "Test", R.drawable.stock_chair));
+            items.add(new Item("Sofa", "Test", R.drawable.stock_couch));
+            items.add(new Item("Desk", "Test", R.drawable.stock_desk));
+
+
         }
-    }
 
-    private List<Item> items;
-
-    // This method creates an ArrayList that has three Person objects
-    // Checkout the project associated with this tutorial on Github if
-    // you want to use the same images.
-    private void initializeData()
-    {
-        items = new ArrayList<>();
-        items.add(new Item("Emma Wilson", "23 years old"));
-        items.add(new Item("Lavery Maiss", "25 years old"));
-        items.add(new Item("Lillie Watts", "35 years old"));
-    }
+         private void initializeAdapter()
+        {
+             MyAdapter adapter = new MyAdapter(items);
+             rv.setAdapter(adapter);
+        }
 
 }
